@@ -1,9 +1,18 @@
-import { Controller, Get, Headers, Post, Body, Param, Patch, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Headers,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productService: ProductsService) { }
+  constructor(private readonly productService: ProductsService) {}
 
   @Get()
   getAllProducts() {
@@ -19,7 +28,7 @@ export class ProductsController {
   addProducts(
     @Body('title') title: string,
     @Body('description') description: string,
-    @Body('price') price: number
+    @Body('price') price: number,
   ) {
     const generatedId = this.productService.insertProduct(
       title,
@@ -30,10 +39,11 @@ export class ProductsController {
   }
 
   @Patch(':id')
-  updateProdcut(@Param('id') id: string,
+  updateProdcut(
+    @Param('id') id: string,
     @Body('title') title: string,
     @Body('description') description: string,
-    @Body('price') price: number
+    @Body('price') price: number,
   ) {
     this.productService.updateProdcut(id, title, description, price);
     return null;

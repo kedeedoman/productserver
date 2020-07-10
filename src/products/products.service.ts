@@ -12,7 +12,8 @@ export class ProductsService {
   private findProduct(id: string): [number, Product] {
     const productIndex = this.products.findIndex(product => product.id === id);
     const product = this.products[productIndex];
-    if (!product) throw new NotFoundException("Product with given Id does not exist");
+    if (!product)
+      throw new NotFoundException('Product with given Id does not exist');
     return [productIndex, product];
   }
 
@@ -27,7 +28,6 @@ export class ProductsService {
     this.products.push(product);
     return id;
   }
-
 
   getProducts() {
     return [...this.products];
@@ -51,5 +51,4 @@ export class ProductsService {
     const [productIndex, product] = this.findProduct(id);
     this.products.splice(productIndex, 1);
   }
-
 }
