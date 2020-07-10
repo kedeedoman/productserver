@@ -15,8 +15,8 @@ export class ProductsController {
   constructor(private readonly productService: ProductsService) {}
 
   @Get()
-  getAllProducts() {
-    return this.productService.getProducts();
+  async getAllProducts() {
+    return await this.productService.getProducts();
   }
 
   @Get(':id')
@@ -25,33 +25,36 @@ export class ProductsController {
   }
 
   @Post()
-  addProducts(
+  async addProducts(
     @Body('title') title: string,
     @Body('description') description: string,
     @Body('price') price: number,
   ) {
-    const generatedId = this.productService.insertProduct(
+    const addedProduct = await this.productService.insertProduct(
       title,
       description,
       price,
     );
-    return { id: generatedId };
+    return { id: addedProduct._id };
   }
 
   @Patch(':id')
-  updateProdcut(
+  async updateProdcut(
     @Param('id') id: string,
     @Body('title') title: string,
     @Body('description') description: string,
     @Body('price') price: number,
   ) {
-    this.productService.updateProdcut(id, title, description, price);
-    return null;
+    return await this.productService.updateProdcut(
+      id,
+      title,
+      description,
+      price,
+    );
   }
 
   @Delete(':id')
-  removeProduct(@Param('id') id: string) {
-    this.productService.deleteProduct(id);
-    return null;
+  async removeProduct(@Param('id') id: string) {
+    return await this.productService.deleteProduct(id);
   }
 }
